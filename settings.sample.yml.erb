@@ -1,0 +1,13 @@
+popsicle:
+  app_name: <%= ENV["POPSICLE_APP_NAME"] || "popsicle_application" %>
+  index_key: <%= ENV["POPSICLE_INDEX_KEY"] || "revision" %>
+  headers:
+    Accept: "text/html"
+  store:
+    redis:
+      host:
+      port:
+      password:
+      timeout:
+      reconnect_attempts:
+      role:

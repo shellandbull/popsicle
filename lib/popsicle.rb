@@ -1,4 +1,6 @@
+require "rack"
+
 module Popsicle
-  autoload :App, "popsicle/app"
+  autoload :Application, "popsicle/application"
   autoload :VERSION, "popscicle/version"
 end
