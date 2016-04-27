@@ -12,6 +12,7 @@ RSpec.describe Popsicle::Application, type: :entity do
                         headers: headers,
                         index_key: index_key)
   end
+
   describe "#initialize" do
     it "assigns store, app_name, headers, index_key" do
       expect(subject.store).to eq(store)

@@ -2,7 +2,9 @@ require "mock_redis"
 require "rack/test"
 require "pry"
 
-Dir["#{File.expand_path("./lib")}/**/**"].each { |filename| require(filename) }
+Dir["#{File.expand_path("./lib")}/**/**"].reverse.each do |filename|
+  require(filename)
+end
 
 
 RSpec.configure do |config|
