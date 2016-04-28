@@ -2,6 +2,11 @@ require "redis"
 Dir["#{File.expand_path("./lib")}/**/**"].each { |filename| require(filename) }
 
 filename       = File.expand_path(".", "settings.yml.erb")
+
+unless File.exist?(filename)
+  system("cp settings.sample.yml.erb #{filename}")
+end
+
 settings       = Popsicle::Settings.new(filename: filename)
 settings.load
 settings       = settings.fetch("popsicle")

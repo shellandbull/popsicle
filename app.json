@@ -1,0 +1,52 @@
+{
+  "name": "Popsicle",
+  "description": "A tiny Rack app to serve your Ember-CLI apps.",
+  "keywords": [
+    "Popsicle",
+    "Ember",
+    "Ember-CLI"
+  ],
+  "website": "https://github.com/mariogintili/popsicle",
+  "repository": "https://github.com/mariogintili/popsicle",
+  "success_url": "/",
+  "env": {
+    "RACK_ENV": {
+      "required": true
+    },
+    "POPSICLE_APP_NAME": {
+      "description": "Name of your application",
+      "required": true
+    },
+    "POPSICLE_INDEX_KEY": {
+      "description": "The index key used as the query parameter key to be used by the server",
+      "required": true
+    },
+    "POPSICLE_REDIS_HOST": {
+      "description": "Redis host",
+      "required": true
+    },
+    "POPSICLE_REDIS_PORT": {
+      "description": "Redis port",
+      "required": true
+    },
+    "POPSICLE_REDIS_PASSWORD": {
+      "description": "Redis password",
+      "required": true
+    },
+    "POPSICLE_REDIS_TIMEOUT": {
+      "description": "Redis timeout in ms",
+      "required": true
+    },
+    "POPSICLE_REDIS_RECONNECT_ATTEMPTS": {
+      "description": "Reconnect attempts needs to be an integer",
+      "required": true
+    },
+    "POPSICLE_REDIS_ROLE": {
+      "description": "The roles of the redis store. Defaults to master",
+      "required": true
+    }
+  },
+  "addons": [
+    "redistogo:nano"
+  ]
+}
