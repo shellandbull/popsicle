@@ -3,6 +3,7 @@ ruby "2.2.3"
 
 gem "rack"
 gem "redis"
+gem "colorize"
 
 group :test, :development do
   gem "rspec"

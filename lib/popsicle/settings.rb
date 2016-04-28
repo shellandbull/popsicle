@@ -17,5 +17,7 @@ module Popsicle
     def [](key)
       @values.fetch(key)
     end
+
+    alias_method :fetch, :[]
   end
 end
