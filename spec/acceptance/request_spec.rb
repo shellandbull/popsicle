@@ -27,12 +27,12 @@ RSpec.describe "popsicle/acceptance/request", type: :acceptance do
 
   describe "Making a request to the server" do
     let(:revision_value) { "12345" }
-    let(:revision_key) { "#{index_key}:#{revision_value}" }
+    let(:revision_key) { "#{app_name}:index:#{revision_value}" }
     let(:expected_body) { "foobar" }
 
     before do
       mock_redis.set(revision_key, expected_body)
-      mock_redis.set("#{index_key}:current", revision_value)
+      mock_redis.set("#{app_name}:index:current", revision_key)
     end
 
     describe "configurable settings" do
@@ -88,9 +88,6 @@ RSpec.describe "popsicle/acceptance/request", type: :acceptance do
           expect(last_response.body).to eq(expected_body)
         end
       end
-    end
-
-    context "when an exception occurs" do
     end
   end
 end

@@ -1,4 +1,5 @@
 require "logger"
+require "pry"
 
 module Popsicle
   class Application
@@ -13,21 +14,17 @@ module Popsicle
 
     def call(env)
       @request = Rack::Request.new(env)
+
       begin
-        [200, headers, StringIO.new(found_revision)]
+        response(code: 200, body: found_revision)
       rescue => e
         logger.error(e)
-        [500, headers, StringIO.new(e.class.to_s)]
+        response(code: 500, body: e.class.to_s)
       end
     end
 
     def found_revision
-      (store.get("#{index_key}:#{request.params[index_key]}") || default_revision).to_s
-    end
-
-    def default_revision
-      key = store.get("#{index_key}:current")
-      store.get("#{index_key}:#{key}")
+      store.get(revision_key).to_s
     end
 
     def revision_requested?
@@ -36,6 +33,23 @@ module Popsicle
 
     def logger
       @logger ||= Logger.new(build_log_file)
+    end
+
+    def revision_key
+      if revision_requested?
+        "#{app_name}:index:#{request.params[index_key]}"
+      else
+        current_revision_value = store.get("#{app_name}:index:current")
+        "#{app_name}:index:#{current_revision_value}"
+      end
+    end
+
+    def response(code:, body:)
+      [
+        code,
+        headers,
+        StringIO.new(body)
+      ]
     end
 
     private
