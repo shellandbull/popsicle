@@ -32,7 +32,7 @@ module Popsicle
     end
 
     def logger
-      @logger ||= Logger.new(build_log_file)
+      @logger ||= Logger.new(STDOUT)
     end
 
     def revision_key
@@ -50,14 +50,6 @@ module Popsicle
         headers,
         StringIO.new(body)
       ]
-    end
-
-    private
-
-    def build_log_file
-      File.expand_path(".", "log/#{ENV["RACK_ENV"]}.log").tap do |filename|
-        File.new(filename, "w")
-      end
     end
   end
 end
