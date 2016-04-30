@@ -1,5 +1,4 @@
 require "logger"
-require "pry"
 
 module Popsicle
   class Application
