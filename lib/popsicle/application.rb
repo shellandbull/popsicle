@@ -13,7 +13,6 @@ module Popsicle
 
     def call(env)
       @request = Rack::Request.new(env)
-
       begin
         response(code: 200, body: found_revision)
       rescue => e

@@ -1,4 +1,5 @@
 require "redis"
+require "pry"
 Dir["#{File.expand_path("./lib")}/**/**"].each { |filename| require(filename) }
 
 filename       = File.expand_path(".", "settings.yml.erb")
