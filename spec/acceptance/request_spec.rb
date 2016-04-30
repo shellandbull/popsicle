@@ -62,6 +62,8 @@ RSpec.describe "popsicle/acceptance/request", type: :acceptance do
         allow(app).to receive(:found_revision) do
           fail StandardError, "Something bad happened"
         end
+
+        allow(app.logger).to receive(:error)
         get "/"
       end
 
