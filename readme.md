@@ -26,7 +26,7 @@ A tiny Rack app to serve your Ember-CLI apps. Since it's rack-based you can easi
 # Setup
 
 - Press the deploy to Heroku button :rocket:
-- Assign the env vars specified on `app.json`
+- Assign the env vars specified on [`app.json`](https://github.com/mariogintili/popsicle/blob/master/app.json)
 - Deploy your Ember-CLI application & enjoy.
 
 # Usage with Rails
