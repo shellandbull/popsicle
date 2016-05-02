@@ -28,3 +28,7 @@ A tiny Rack app to serve your Ember-CLI apps. Since it's rack-based you can easi
 - Press the deploy to Heroku button :rocket:
 - Assign the env vars specified on `app.json`
 - Deploy your Ember-CLI application & enjoy.
+
+# Usage with Rails
+
+Since this is a Rack-based application you can [mount it as middleware](http://guides.rubyonrails.org/rails_on_rack.html#configuring-middleware-stack) and setup some redirect rules on top ensuring Popsicle will only be on the set of routes that best suit you.
