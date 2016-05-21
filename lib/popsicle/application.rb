@@ -9,6 +9,11 @@ module Popsicle
     config_accessor :headers
     config_accessor :index_key
 
+    def initialize
+      super
+      apply_config!
+    end
+
     def call(env)
       @request = Rack::Request.new(env)
       begin
@@ -24,19 +29,19 @@ module Popsicle
     end
 
     def store
-      @_config[:store]
+      config[:store]
     end
 
     def app_name
-      @_config[:app_name]
+      config[:app_name]
     end
 
     def headers
-      @_config[:headers]
+      config[:headers]
     end
 
     def index_key
-      @_config[:index_key]
+      config[:index_key]
     end
 
     def revision_requested?
@@ -62,6 +67,22 @@ module Popsicle
         headers,
         StringIO.new(body)
       ]
+    end
+
+    private
+
+    def apply_config!
+      config[:app_name] ||= ENV["POPSICLE_APP_NAME"]
+      config[:index_key] ||= ENV["POPSICLE_INDEX_KEY"]
+
+      return if config[:store]
+      require "redis"
+      config[:store] ||= Redis.new(host: ENV["POPSICLE_REDIS_HOST"],
+                                     port: ENV["POPSICLE_REDIS_PORT"],
+                                     password: ENV["POPSICLE_REDIS_PASSWORD"],
+                                     timeout: ENV["POPSICLE_REDIS_TIMEOUT"],
+                                     reconnect_attempts: ENV["POPSICLE_REDIS_RECONNECT_ATTEMPTS"],
+                                     role: ENV["POPSICLE_REDIS_ROLE"])
     end
   end
 end
