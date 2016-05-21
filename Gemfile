@@ -4,6 +4,7 @@ ruby "2.2.3"
 gem "rack"
 gem "redis"
 gem "colorize"
+gem "activesupport"
 
 group :test, :development do
   gem "rspec"

@@ -2,14 +2,12 @@ require "logger"
 
 module Popsicle
   class Application
-    attr_accessor :request, :store, :app_name, :headers, :index_key
-
-    def initialize(store:, app_name:, headers:, index_key:)
-      @store     = store
-      @app_name  = app_name
-      @headers   = headers
-      @index_key = index_key
-    end
+    include ActiveSupport::Configurable
+    attr_accessor :request
+    config_accessor :store
+    config_accessor :app_name
+    config_accessor :headers
+    config_accessor :index_key
 
     def call(env)
       @request = Rack::Request.new(env)
@@ -23,6 +21,22 @@ module Popsicle
 
     def found_revision
       store.get(revision_key).to_s
+    end
+
+    def store
+      @_config[:store]
+    end
+
+    def app_name
+      @_config[:app_name]
+    end
+
+    def headers
+      @_config[:headers]
+    end
+
+    def index_key
+      @_config[:index_key]
     end
 
     def revision_requested?
