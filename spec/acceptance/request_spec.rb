@@ -19,10 +19,12 @@ RSpec.describe "popsicle/acceptance/request", type: :acceptance do
   end
 
   def app
-    @app ||= Popsicle::Application.new(store: app_settings[:store],
-                                       app_name: app_settings[:app_name],
-                                       headers: app_settings[:headers],
-                                       index_key: app_settings[:index_key])
+    @app ||= Popsicle::Application.new.tap do |instance|
+      instance.store     = app_settings[:store]
+      instance.app_name  = app_settings[:app_name]
+      instance.headers   = app_settings[:headers]
+      instance.index_key = app_settings[:index_key]
+    end
   end
 
   describe "Making a request to the server" do

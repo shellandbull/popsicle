@@ -2,13 +2,16 @@ require "logger"
 
 module Popsicle
   class Application
-    attr_accessor :request, :store, :app_name, :headers, :index_key
+    include ActiveSupport::Configurable
+    attr_accessor :request
+    config_accessor :store
+    config_accessor :app_name
+    config_accessor :headers
+    config_accessor :index_key
 
-    def initialize(store:, app_name:, headers:, index_key:)
-      @store     = store
-      @app_name  = app_name
-      @headers   = headers
-      @index_key = index_key
+    def initialize
+      super
+      apply_config!
     end
 
     def call(env)
@@ -23,6 +26,22 @@ module Popsicle
 
     def found_revision
       store.get(revision_key).to_s
+    end
+
+    def store
+      config[:store]
+    end
+
+    def app_name
+      config[:app_name]
+    end
+
+    def headers
+      config[:headers]
+    end
+
+    def index_key
+      config[:index_key]
     end
 
     def revision_requested?
@@ -48,6 +67,22 @@ module Popsicle
         headers,
         StringIO.new(body)
       ]
+    end
+
+    private
+
+    def apply_config!
+      config[:app_name] ||= ENV["POPSICLE_APP_NAME"]
+      config[:index_key] ||= ENV["POPSICLE_INDEX_KEY"]
+
+      return if config[:store]
+      require "redis"
+      config[:store] ||= Redis.new(host: ENV["POPSICLE_REDIS_HOST"],
+                                     port: ENV["POPSICLE_REDIS_PORT"],
+                                     password: ENV["POPSICLE_REDIS_PASSWORD"],
+                                     timeout: ENV["POPSICLE_REDIS_TIMEOUT"],
+                                     reconnect_attempts: ENV["POPSICLE_REDIS_RECONNECT_ATTEMPTS"],
+                                     role: ENV["POPSICLE_REDIS_ROLE"])
     end
   end
 end
